@@ -172,14 +172,13 @@ private fun ListContent(
         }
         LottieAnimation(
             composition = composition,
-            progress = { minOf(pullToRefreshState.distanceFraction, 1f) / 2.5f },
+            progress = { minOf(pullToRefreshState.distanceFraction, 1f) / 2.6f },
             modifier = Modifier
                 .pullToRefreshIndicator(
                     state = pullToRefreshState,
                     containerColor = BForBankTheme.colorScheme.surfaceContainer,
                     isRefreshing = isRefreshing
                 )
-                .padding(BForBankTheme.padding.extraSmall)
         )
 //        Icon(
 //            imageVector = Icons.Sharp.Refresh,
