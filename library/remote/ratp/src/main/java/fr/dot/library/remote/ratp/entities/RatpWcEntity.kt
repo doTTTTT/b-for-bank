@@ -20,11 +20,11 @@ internal data class RatpWcEntity(
     val fields: FieldsEntity,
 
     @SerialName("geometry")
-    val geometry: GeometryEntity,
+    val geometry: GeometryEntity? = null,
 
     @SerialName("record_timestamp")
     @Serializable(InstantIso8601Serializer::class)
-    val recordTimestamp: Instant
+    val recordTimestamp: Instant = Instant.DISTANT_PAST
 
 ) {
 
@@ -38,7 +38,7 @@ internal data class RatpWcEntity(
         val geoShape: GeoShapeEntity? = null,
 
         @SerialName("horaire")
-        val time: String,
+        val time: String = "",
 
         @SerialName("acces_pmr")
         @Serializable(FrenchBooleanSerializer::class)
@@ -48,7 +48,7 @@ internal data class RatpWcEntity(
         val arrondissement: Int? = null,
 
         @SerialName("geo_point_2d")
-        val geoPoint2d: LatitudeLongitudeEntity,
+        val geoPoint2d: LatitudeLongitudeEntity? = null,
 
         @SerialName("source")
         val source: String = "",

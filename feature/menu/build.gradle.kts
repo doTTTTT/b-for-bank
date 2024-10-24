@@ -40,7 +40,7 @@ android {
 dependencies {
 
     implementation(libs.bundles.androidx.material3)
-
+    implementation(libs.bundles.androidx.paging)
     implementation(libs.bundles.google.maps)
 
     implementation(projects.library.navigation)

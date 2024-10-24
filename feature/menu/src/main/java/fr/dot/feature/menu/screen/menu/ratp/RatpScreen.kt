@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -35,9 +34,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 import fr.dot.library.ui.R
 import fr.dot.library.ui.theme.BForBankTheme
 import fr.dot.library.ui.theme.BforBankTheme
+import kotlinx.coroutines.flow.emptyFlow
 import org.koin.androidx.compose.koinViewModel
 
 private val DetailEmptyIconSize = 64.dp
@@ -47,9 +51,11 @@ internal fun RatpScreen(
     viewModel: RatpViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val items = viewModel.items.collectAsLazyPagingItems()
 
     Content(
         uiState = uiState,
+        items = items,
         onAction = viewModel::onAction
     )
 }
@@ -57,6 +63,7 @@ internal fun RatpScreen(
 @Composable
 private fun Content(
     uiState: RatpUIState,
+    items: LazyPagingItems<ToiletItem>,
     onAction: (RatpAction) -> Unit
 ) {
     val navigator = rememberListDetailPaneScaffoldNavigator<Any>()
@@ -73,6 +80,7 @@ private fun Content(
             AnimatedPane {
                 ListContent(
                     uiState = uiState,
+                    items = items,
                     onAction = onAction
                 )
             }
@@ -93,19 +101,24 @@ private fun Content(
 @Composable
 private fun ListContent(
     uiState: RatpUIState,
+    items: LazyPagingItems<ToiletItem>,
     onAction: (RatpAction) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(1)
     ) {
         items(
-            items = uiState.items,
-            key = ToiletItem::recordId
-        ) {
-            ItemUI(
-                item = it,
-                onClick = { onAction(RatpAction.SelectItem(it)) }
-            )
+            count = items.itemCount,
+            key = items.itemKey { it.recordId }
+        ) { index ->
+            val item = items[index]
+
+            if (item != null) {
+                ItemUI(
+                    item = item,
+                    onClick = { onAction(RatpAction.SelectItem(item)) }
+                )
+            }
         }
     }
 }
@@ -181,6 +194,7 @@ private fun Preview() {
     BforBankTheme {
         Content(
             uiState = RatpUIState(),
+            items = emptyFlow<PagingData<ToiletItem>>().collectAsLazyPagingItems(),
             onAction = {}
         )
     }

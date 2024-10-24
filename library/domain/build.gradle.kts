@@ -39,6 +39,8 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
 
+    implementation(libs.androidx.paging.core)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
