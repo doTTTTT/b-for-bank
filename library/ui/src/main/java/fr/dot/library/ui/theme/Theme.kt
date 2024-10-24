@@ -2,12 +2,16 @@ package fr.dot.library.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalContext
 import fr.dot.bforbank.ui.theme.Pink40
 import fr.dot.bforbank.ui.theme.Pink80
@@ -38,6 +42,30 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
+
+data object BForBankTheme {
+
+    val typography: Typography
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.typography
+
+    val shapes: Shapes
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.shapes
+
+    val colorScheme: ColorScheme
+        @Composable
+        @ReadOnlyComposable
+        get() = MaterialTheme.colorScheme
+
+    val padding: Padding
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalPadding.current
+
+}
 
 @Composable
 fun BforBankTheme(

@@ -3,6 +3,7 @@ agp = "8.7.1"
 androidx-paging = "3.3.2"
 androidx-navigation = "2.8.3"
 androidx-splash = "1.1.0"
+google-maps = "6.1.2"
 koin-bom = "4.0.0"
 kotlin-core = "2.0.21"
 kotlin-coroutine = "1.9.0"
@@ -50,7 +51,6 @@ androidx-material3-adaptive-layout = { module = "androidx.compose.material3.adap
 androidx-material3-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "material3-adaptive" }
 androidx-material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite" }
 
-
 # AndroidX Navigation
 androidx-navigation-core = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }
 androidx-navigation-test = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidx-navigation" }
@@ -58,6 +58,10 @@ androidx-navigation-test = { group = "androidx.navigation", name = "navigation-t
 # AndroidX Paging
 androidx-paging-core = { group = "androidx.paging", name = "paging-runtime", version.ref = "androidx-paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidx-paging" }
+
+# Google Maps
+google-maps-compose-core = { group = "com.google.maps.android", name = "maps-compose", version.ref = "google-maps" }
+google-maps-compose-utils = { group = "com.google.maps.android", name = "maps-compose-utils", version.ref = "google-maps" }
 
 # Koin
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
@@ -89,6 +93,10 @@ androidx-ui = [
 ]
 androidx-paging = [
     "androidx-paging-compose", "androidx-paging-core"
+]
+
+google-maps = [
+    "google-maps-compose-core", "google-maps-compose-utils"
 ]
 
 koin = [

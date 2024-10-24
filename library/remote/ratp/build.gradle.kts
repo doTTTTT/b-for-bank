@@ -43,6 +43,8 @@ dependencies {
 
     implementation(libs.bundles.ktor)
 
+    implementation(libs.androidx.paging.core)
+
     implementation(libs.kotlin.serialization)
     implementation(libs.kotlin.coroutine)
     implementation(libs.kotlin.datetime)

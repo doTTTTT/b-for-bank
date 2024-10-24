@@ -41,6 +41,8 @@ dependencies {
 
     implementation(libs.bundles.androidx.material3)
 
+    implementation(libs.bundles.google.maps)
+
     implementation(projects.library.navigation)
     implementation(projects.library.ui)
     implementation(projects.library.domain)

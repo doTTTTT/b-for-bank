@@ -1,6 +1,9 @@
 package fr.dot.bforbank
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import fr.dot.feature.menu.menuGraph
@@ -14,7 +17,10 @@ internal fun ApplicationContent() {
     BforBankTheme {
         NavHost(
             navController = navController,
-            startDestination = MenuRoute
+            startDestination = MenuRoute,
+            modifier = Modifier
+                .fillMaxSize()
+                .safeContentPadding()
         ) {
             menuGraph(navController)
         }
