@@ -43,6 +43,8 @@ dependencies {
     implementation(libs.bundles.androidx.paging)
     implementation(libs.bundles.google.maps)
 
+    implementation(libs.other.lottie)
+
     implementation(projects.library.navigation)
     implementation(projects.library.ui)
     implementation(projects.library.domain)

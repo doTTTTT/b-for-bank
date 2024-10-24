@@ -19,6 +19,8 @@ activityCompose = "1.9.3"
 composeBom = "2024.10.00"
 appcompat = "1.7.0"
 
+other-lottie = "6.5.2"
+
 material3-adaptive = "1.0.0"
 material-icon = "1.7.4"
 
@@ -80,6 +82,9 @@ ktor-client-android = { group = "io.ktor", name = "ktor-client-okhttp", version.
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-client-content-negotiation-core = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-content-negotiation-kotlinx = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+# Other
+other-lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "other-lottie" }
 
 [bundles]
 
