@@ -166,9 +166,9 @@ private fun LazyGridItemScope.ItemUI(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .clickable(onClick = onClick)
                 .padding(16.dp)
                 .animateItem()
-                .clickable(onClick = onClick)
         ) {
             Text(text = item.recordId)
         }
