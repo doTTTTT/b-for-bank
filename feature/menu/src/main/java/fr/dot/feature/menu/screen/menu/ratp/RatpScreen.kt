@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Wc
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -104,8 +106,10 @@ private fun ListContent(
     items: LazyPagingItems<ToiletItem>,
     onAction: (RatpAction) -> Unit
 ) {
+
     LazyVerticalGrid(
-        columns = GridCells.Fixed(1)
+        columns = GridCells.Fixed(1),
+        modifier = Modifier.fillMaxSize()
     ) {
         items(
             count = items.itemCount,
@@ -117,6 +121,15 @@ private fun ListContent(
                 ItemUI(
                     item = item,
                     onClick = { onAction(RatpAction.SelectItem(item)) }
+                )
+            }
+        }
+        if (items.loadState.append is LoadState.Loading) {
+            item(
+                key = "APPEND"
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.animateItem()
                 )
             }
         }
