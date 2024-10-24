@@ -3,6 +3,7 @@ plugins {
 
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -37,6 +38,8 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.bundles.androidx.material3)
 
     implementation(projects.library.navigation)
     implementation(projects.library.ui)

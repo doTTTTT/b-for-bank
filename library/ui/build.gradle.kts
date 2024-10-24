@@ -41,8 +41,9 @@ dependencies {
     api(libs.androidx.core.ktx)
     api(libs.androidx.appcompat)
     api(libs.androidx.lifecycle.runtime.ktx)
-
     api(libs.androidx.navigation.core)
+
+    api(libs.androidx.material.icons)
 
     api(libs.bundles.androidx.ui)
 

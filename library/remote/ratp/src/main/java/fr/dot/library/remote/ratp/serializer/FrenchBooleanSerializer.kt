@@ -7,7 +7,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 internal object FrenchBooleanSerializer : KSerializer<Boolean> {
-    override val descriptor: SerialDescriptor = serialDescriptor<Boolean>()
+    override val descriptor: SerialDescriptor = serialDescriptor<String>()
 
     private const val FRENCH_TRUE = "Oui"
     private const val FRENCH_FALSE = "Non"

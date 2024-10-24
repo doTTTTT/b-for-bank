@@ -42,7 +42,7 @@ internal data class RatpWcEntity(
 
         @SerialName("acces_pmr")
         @Serializable(FrenchBooleanSerializer::class)
-        val accesPmr: String = "",
+        val accesPmr: Boolean = false,
 
         @SerialName("arrondissement")
         val arrondissement: Int? = null,
@@ -51,19 +51,19 @@ internal data class RatpWcEntity(
         val geoPoint2d: LatitudeLongitudeEntity,
 
         @SerialName("source")
-        val source: String,
+        val source: String = "",
 
         @SerialName("gestionnaire")
-        val gestionnaire: String,
+        val gestionnaire: String = "",
 
         @SerialName("adresse")
-        val address: String,
+        val address: String = "",
 
         @SerialName("type")
-        val type: String,
+        val type: String = "",
 
         @SerialName("dist")
-        val dist: String
+        val dist: String = ""
 
     )
 

@@ -2,6 +2,7 @@ package fr.dot.bforbank
 
 import android.app.Application
 import fr.dot.domain.di.domainModule
+import fr.dot.feature.menu.di.menuModule
 import fr.dot.library.data.di.dataModule
 import fr.dot.library.remote.ratp.di.ratpModule
 import org.koin.android.ext.koin.androidContext
@@ -17,7 +18,9 @@ class BforBankApplication : Application() {
             modules(
                 ratpModule,
                 dataModule,
-                domainModule
+                domainModule,
+
+                menuModule
             )
         }
     }

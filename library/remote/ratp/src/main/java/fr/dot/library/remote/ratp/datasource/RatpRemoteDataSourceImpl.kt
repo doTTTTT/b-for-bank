@@ -11,6 +11,7 @@ internal class RatpRemoteDataSourceImpl(
 
     override suspend fun getWc(): List<RatpWC> {
         return api.getWcs()
+            .records
             .map(RatpWcEntity::toDomain)
     }
 

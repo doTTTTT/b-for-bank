@@ -19,8 +19,7 @@ composeBom = "2024.10.00"
 appcompat = "1.7.0"
 
 material3-adaptive = "1.0.0"
-material = "1.12.0"
-materialVersion = "1.12.0"
+material-icon = "1.7.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -41,11 +40,16 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-splash" }
 
+# AndroidX Material
+androidx-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icon" }
+
 # AndroidX Material3
 androidx-material3-core = { group = "androidx.compose.material3", name = "material3" }
 androidx-material3-adaptive-core = { module = "androidx.compose.material3.adaptive:adaptive", version.ref = "material3-adaptive" }
 androidx-material3-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout", version.ref = "material3-adaptive" }
 androidx-material3-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation", version.ref = "material3-adaptive" }
+androidx-material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite" }
+
 
 # AndroidX Navigation
 androidx-navigation-core = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }
@@ -72,13 +76,13 @@ ktor-client-android = { group = "io.ktor", name = "ktor-client-okhttp", version.
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-client-content-negotiation-core = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-content-negotiation-kotlinx = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
 [bundles]
 
 androidx-material3 = [
     "androidx-material3-adaptive-core", "androidx-material3-adaptive-layout",
-    "androidx-material3-core", "androidx-material3-adaptive-navigation"
+    "androidx-material3-core", "androidx-material3-adaptive-navigation",
+    "androidx-material3-adaptive-navigation-suite"
 ]
 androidx-ui = [
     "androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling", "androidx-ui-tooling-preview"
