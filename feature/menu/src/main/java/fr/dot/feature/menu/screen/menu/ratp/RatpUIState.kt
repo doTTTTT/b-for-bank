@@ -3,18 +3,38 @@ package fr.dot.feature.menu.screen.menu.ratp
 import androidx.compose.runtime.Immutable
 import fr.dot.domain.entities.RatpWC
 import fr.dot.library.ui.common.ViewModelState
+import fr.dot.library.ui.formatter.DateTimeFormatter
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @Immutable
 internal data class RatpUIState(
-    val item: ToiletItem? = null,
-    val items: List<ToiletItem> = emptyList()
+    val item: ToiletItem? = null
 ) : ViewModelState
 
 @Immutable
 internal data class ToiletItem(
-    val recordId: String
+    val recordId: String,
+    val address: String,
+    val borough: Int?,
+    val geoPoint: String?,
+    val distance: String?,
+    val accessPmr: Boolean,
+    val recorded: String,
+    val administrator: String?,
+    val type: RatpWC.Type
 )
 
-internal fun RatpWC.toItem() = ToiletItem(
-    recordId = recordId
+internal fun RatpWC.toItem(
+    formatter: DateTimeFormatter
+) = ToiletItem(
+    recordId = recordId,
+    address = address,
+    borough = borough,
+    geoPoint = geoPoint?.let { "${it.latitude},${it.longitude}" },
+    distance = distance,
+    accessPmr = accessPmr,
+    recorded = formatter.dateTime.format(recorded.toLocalDateTime(TimeZone.currentSystemDefault())),
+    administrator = administrator,
+    type = type
 )

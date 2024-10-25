@@ -45,6 +45,8 @@ dependencies {
 
     api(libs.androidx.material.icons)
 
+    api(libs.kotlin.datetime)
+
     api(libs.bundles.androidx.ui)
 
     api(platform(libs.androidx.compose.bom))

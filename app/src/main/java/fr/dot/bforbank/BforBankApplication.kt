@@ -5,6 +5,7 @@ import fr.dot.domain.di.domainModule
 import fr.dot.feature.menu.di.menuModule
 import fr.dot.library.data.di.dataModule
 import fr.dot.library.remote.ratp.di.ratpModule
+import fr.dot.library.ui.di.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -16,6 +17,7 @@ class BforBankApplication : Application() {
         startKoin {
             androidContext(this@BforBankApplication)
             modules(
+                uiModule,
                 ratpModule,
                 dataModule,
                 domainModule,

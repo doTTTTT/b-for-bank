@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,7 +17,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.Refresh
+import androidx.compose.material.icons.sharp.Bathroom
+import androidx.compose.material.icons.sharp.QuestionMark
 import androidx.compose.material.icons.sharp.Wc
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
@@ -41,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -52,13 +55,13 @@ import androidx.paging.compose.itemKey
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import fr.dot.domain.entities.RatpWC
 import fr.dot.library.ui.R
 import fr.dot.library.ui.theme.BForBankTheme
 import fr.dot.library.ui.theme.BforBankTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import org.koin.androidx.compose.koinViewModel
-import kotlin.math.abs
 
 private val DetailEmptyIconSize = 64.dp
 
@@ -242,13 +245,40 @@ private fun LazyGridItemScope.ItemUI(
             )
     ) {
         Column(
+            verticalArrangement = Arrangement.spacedBy(BForBankTheme.padding.small),
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable(onClick = onClick)
                 .padding(16.dp)
                 .animateItem()
         ) {
-            Text(text = item.recordId)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    imageVector = when (item.type) {
+                        RatpWC.Type.WC -> Icons.Sharp.Wc
+                        RatpWC.Type.SANISETTE -> Icons.Sharp.Bathroom
+                        RatpWC.Type.UNKNOWN -> Icons.Sharp.QuestionMark
+                    },
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+                Text(
+                    text = item.recorded,
+                    style = BForBankTheme.typography.labelSmall,
+                    modifier = Modifier.align(Alignment.Top)
+                )
+            }
+            Text(
+                text = item.address,
+                style = BForBankTheme.typography.titleSmall,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }

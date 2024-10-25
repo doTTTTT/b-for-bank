@@ -45,7 +45,7 @@ internal data class RatpWcEntity(
         val accesPmr: Boolean = false,
 
         @SerialName("arrondissement")
-        val arrondissement: Int? = null,
+        val borough: Int? = null,
 
         @SerialName("geo_point_2d")
         val geoPoint2d: LatitudeLongitudeEntity? = null,
@@ -54,16 +54,16 @@ internal data class RatpWcEntity(
         val source: String = "",
 
         @SerialName("gestionnaire")
-        val gestionnaire: String = "",
+        val administrator: String? = null,
 
         @SerialName("adresse")
         val address: String = "",
 
         @SerialName("type")
-        val type: String = "",
+        val type: Type = Type.UNKNOWN,
 
         @SerialName("dist")
-        val dist: String = ""
+        val dist: String? = null
 
     )
 
@@ -89,8 +89,32 @@ internal data class RatpWcEntity(
 
     )
 
+    @Serializable
+    enum class Type {
+
+        @SerialName("TOILETTES")
+        WC,
+
+        @SerialName("SANISETTE")
+        SANISETTE,
+
+        UNKNOWN
+    }
+
 }
 
 internal fun RatpWcEntity.toDomain() = RatpWC(
-    recordId = recordId
+    recordId = recordId,
+    address = fields.address,
+    geoPoint = fields.geoPoint2d?.toDomain(),
+    distance = fields.dist,
+    accessPmr = fields.accesPmr,
+    borough = fields.borough,
+    recorded = recordTimestamp,
+    administrator = fields.administrator,
+    type = when (fields.type) {
+        RatpWcEntity.Type.WC -> RatpWC.Type.WC
+        RatpWcEntity.Type.SANISETTE -> RatpWC.Type.SANISETTE
+        RatpWcEntity.Type.UNKNOWN -> RatpWC.Type.UNKNOWN
+    }
 )

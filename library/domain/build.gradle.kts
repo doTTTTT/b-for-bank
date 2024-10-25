@@ -39,6 +39,8 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
 
+    implementation(libs.kotlin.datetime)
+
     implementation(libs.androidx.paging.core)
 
     testImplementation(libs.junit)
