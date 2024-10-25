@@ -89,10 +89,7 @@ private fun Content(
     LaunchedEffect(uiState.latLng) {
         if (uiState.latLng != null) {
             camera.animate(
-                CameraUpdateFactory.newLatLngZoom(
-                    /* latLng = */ uiState.latLng,
-                    /* zoom = */ 16f
-                )
+                CameraUpdateFactory.newLatLng(uiState.latLng)
             )
         }
     }
