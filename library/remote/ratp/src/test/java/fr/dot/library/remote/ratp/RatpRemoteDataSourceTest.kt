@@ -14,7 +14,7 @@ import kotlin.test.assertNotNull
 internal class RatpRemoteDataSourceTest {
 
     @Test
-    fun `test remote return list`() = runTest {
+    fun `test remote return list of one`() = runTest {
         val api = mockk<RatpApi>()
         val remote = RatpRemoteDataSourceImpl(api)
         val expectedId = "expected-id"
@@ -33,6 +33,30 @@ internal class RatpRemoteDataSourceTest {
         assertEquals(1, list.size)
         assertNotNull(item)
         assertEquals(expectedId, item.recordId)
+    }
+
+    @Test
+    fun `test remote return list of two`() = runTest {
+        val api = mockk<RatpApi>()
+        val remote = RatpRemoteDataSourceImpl(api)
+        val expectedIdOne = "expected-id-one"
+        val expectedIdTwo = "expected-id-two"
+
+        coEvery { api.getWcs(start = 0, distance = 0, latLng = null) } returns RatpRecordsEntity(
+            nhits = 0,
+            parameters = RatpRecordsEntity.ParametersEntity(),
+            records = listOf(
+                RatpWcEntity(recordId = expectedIdOne),
+                RatpWcEntity(recordId = expectedIdTwo)
+            )
+        )
+
+        val list = remote.getWc()
+        val (itemOne, itemTwo) = list
+
+        assertEquals(2, list.size)
+        assertEquals(expectedIdOne, itemOne.recordId)
+        assertEquals(expectedIdTwo, itemTwo.recordId)
     }
 
 }
