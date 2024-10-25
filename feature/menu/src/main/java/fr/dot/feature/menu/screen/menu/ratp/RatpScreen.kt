@@ -160,7 +160,7 @@ internal fun RatpScreen(
 }
 
 @Composable
-private fun Content(
+internal fun Content(
     uiState: RatpUIState,
     snackbarHostState: SnackbarHostState,
     items: LazyPagingItems<ToiletItem>,
@@ -377,6 +377,7 @@ private fun LazyGridItemScope.ItemUI(
                 .clickable(onClick = onClick)
                 .padding(16.dp)
                 .animateItem()
+                .testTag(item.recordId)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

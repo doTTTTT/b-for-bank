@@ -17,15 +17,15 @@ internal data class RatpUIState(
 
 @Immutable
 internal data class ToiletItem(
-    val recordId: String,
-    val address: String,
-    val borough: Int?,
-    val geoPoint: String?,
-    val distance: String?,
-    val accessPmr: Boolean,
-    val recorded: String,
-    val administrator: String?,
-    val type: RatpWC.Type
+    val recordId: String = "",
+    val address: String = "",
+    val borough: Int? = null,
+    val geoPoint: String? = null,
+    val distance: String? = null,
+    val accessPmr: Boolean = false,
+    val recorded: String = "",
+    val administrator: String? = null,
+    val type: RatpWC.Type = RatpWC.Type.UNKNOWN
 )
 
 internal fun RatpWC.toItem(

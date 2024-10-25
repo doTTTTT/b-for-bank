@@ -57,7 +57,7 @@ dependencies {
     implementation(projects.library.ui)
     implementation(projects.library.domain)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.bundles.test.unit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
