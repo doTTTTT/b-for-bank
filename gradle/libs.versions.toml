@@ -18,6 +18,7 @@ lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.3"
 composeBom = "2024.10.00"
 appcompat = "1.7.0"
+turbine = "1.2.0"
 
 mockk = "1.13.10"
 
@@ -42,10 +43,11 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-splash = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-splash" }
+
+androidx-compose-test-core = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
 # AndroidX Material
 androidx-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icon" }
@@ -102,6 +104,7 @@ mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 other-lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "other-lottie" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [bundles]
 
@@ -132,7 +135,11 @@ ktor = [
 
 test-unit = [
     "ktor-client-test", "koltin-test", "androidx-junit", "junit", "kotlin-coroutine-test",
-    "mockk-core", "mockk-agent", "mockk-android"
+    "mockk-core", "mockk-agent", "mockk-android", "turbine"
+]
+test-inte = [
+    "androidx-compose-test-core", "koltin-test", "kotlin-coroutine-test",
+    "mockk-core", "mockk-android", "mockk-agent", "turbine"
 ]
 
 [plugins]

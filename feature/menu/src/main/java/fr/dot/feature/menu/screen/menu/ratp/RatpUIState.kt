@@ -41,3 +41,7 @@ internal fun RatpWC.toItem(
     administrator = administrator,
     type = type
 )
+
+internal object RatpTestTag {
+    const val LIST = "ratp_test_tag"
+}
