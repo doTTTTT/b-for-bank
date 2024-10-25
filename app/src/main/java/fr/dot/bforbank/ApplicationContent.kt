@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import fr.dot.feature.filter.filterGraph
 import fr.dot.feature.menu.menuGraph
 import fr.dot.library.navigation.route.MenuRoute
 import fr.dot.library.ui.theme.BforBankTheme
@@ -23,6 +24,7 @@ internal fun ApplicationContent() {
                 .safeContentPadding()
         ) {
             menuGraph(navController)
+            filterGraph(navController)
         }
     }
 }

@@ -5,11 +5,18 @@
     <string name="screen_menu_item_ratp">WC</string>
     <string name="screen_menu_item_pokemon">Pokemon</string>
     <string name="screen_menu_item_profile">Profile</string>
-    <string name="screen_menu_item_detail_empty">Sélectionner une toilette</string>
+    <string name="screen_menu_item_detail_empty">Select a WC</string>
+
+    <string name="screen_menu_ratp_permission">You must accept at least one permission</string>
+
+    <string name="screen_ratp_filter_maps_description">Select a point on the map</string>
+    <string name="screen_ratp_filter_distance">Distance</string>
 
     <string name="error_common">An error occurred</string>
 
+    <string name="common_accept">Accept</string>
     <string name="common_retry">Réessayer</string>
+    <string name="common_validate">Validate</string>
 
     <string name="month_january">January</string>
     <string name="month_february">February</string>

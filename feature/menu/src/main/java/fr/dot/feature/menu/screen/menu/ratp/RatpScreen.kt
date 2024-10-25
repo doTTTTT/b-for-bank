@@ -2,6 +2,10 @@
 
 package fr.dot.feature.menu.screen.menu.ratp
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,6 +53,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,6 +84,7 @@ import fr.dot.library.ui.theme.BForBankTheme
 import fr.dot.library.ui.theme.BforBankTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 private val DetailEmptyIconSize = 64.dp
@@ -86,20 +92,68 @@ private val DetailEmptyIconSize = 64.dp
 @Composable
 internal fun RatpScreen(
     navController: NavController,
+    distance: Int?,
+    latitude: Double?,
+    longitude: Double?,
     viewModel: RatpViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val items = viewModel.items.collectAsLazyPagingItems()
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val permission = rememberLauncherForActivityResult(RequestMultiplePermissions()) {
+        if (it.any(Map.Entry<String, @kotlin.jvm.JvmSuppressWildcards Boolean>::value)) {
+            navController.navigate(RatpFilterRoute)
+        } else {
+            scope.launch {
+                snackbarHostState.showSnackbar(
+                    message = context.getString(R.string.screen_menu_ratp_permission)
+                )
+            }
+        }
+    }
 
     LaunchedEffectFlowWithLifecycle(viewModel.event) { event ->
         when (event) {
-            RatpEvent.NavigateToFilter -> navController.navigate(RatpFilterRoute)
+            RatpEvent.NavigateToFilter -> {
+                if (
+                    context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED
+                    && context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
+                ) {
+                    permission.launch(
+                        arrayOf(
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                    )
+                } else {
+                    navController.navigate(
+                        RatpFilterRoute(
+                            distance = uiState.distance,
+                            latitude = uiState.latitude,
+                            longitude = uiState.longitude
+                        )
+                    )
+                }
+            }
         }
+    }
+
+    LaunchedEffect(distance, latitude, longitude) {
+        viewModel.onAction(
+            RatpAction.FilterChange(
+                distance = distance ?: return@LaunchedEffect,
+                latitude = latitude ?: return@LaunchedEffect,
+                longitude = longitude ?: return@LaunchedEffect
+            )
+        )
     }
 
     Content(
         uiState = uiState,
         items = items,
+        snackbarHostState = snackbarHostState,
         onAction = viewModel::onAction
     )
 }
@@ -107,11 +161,11 @@ internal fun RatpScreen(
 @Composable
 private fun Content(
     uiState: RatpUIState,
+    snackbarHostState: SnackbarHostState,
     items: LazyPagingItems<ToiletItem>,
     onAction: (RatpAction) -> Unit
 ) {
     val navigator = rememberListDetailPaneScaffoldNavigator<Any>()
-    val snackbarHostState = remember { SnackbarHostState() }
     val resource = LocalContext.current.resources
 
     LaunchedEffect(uiState.item) {
@@ -363,6 +417,7 @@ private fun Preview() {
         Content(
             uiState = RatpUIState(),
             items = emptyFlow<PagingData<ToiletItem>>().collectAsLazyPagingItems(),
+            snackbarHostState = SnackbarHostState(),
             onAction = {}
         )
     }

@@ -1,6 +1,7 @@
 package fr.dot.domain.usecase.ratp
 
 import androidx.paging.PagingData
+import fr.dot.domain.entities.LatitudeLongitude
 import fr.dot.domain.entities.RatpWC
 import fr.dot.domain.repository.RatpRepository
 import fr.dot.domain.usecase.FlowUseCase
@@ -12,9 +13,22 @@ class FlowOfRatpWcsUseCase internal constructor(
 ) : FlowUseCase<PagingData<RatpWC>, FlowOfRatpWcsUseCase.Params> {
 
     override fun invoke(params: Params): Flow<PagingData<RatpWC>> {
-        return ratpRepository.pagingWc()
+        val latLng = if (params.latitude != null && params.longitude != null) {
+            LatitudeLongitude(params.latitude, params.longitude)
+        } else {
+            null
+        }
+
+        return ratpRepository.pagingWc(
+            distance = params.distance,
+            latitudeLongitude = latLng
+        )
     }
 
-    data object Params : UseCaseParams
+    data class Params(
+        val distance: Int,
+        val latitude: Double?,
+        val longitude: Double?
+    ) : UseCaseParams
 
 }

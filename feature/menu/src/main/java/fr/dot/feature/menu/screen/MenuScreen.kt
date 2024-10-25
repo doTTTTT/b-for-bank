@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fr.dot.feature.menu.screen.menu.ratp.RatpScreen
+import fr.dot.library.navigation.ResultConstant
 import fr.dot.library.ui.theme.BforBankTheme
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -104,7 +105,16 @@ private fun MainContent(
     ) {
         composable<MenuRatpRoute> {
             RatpScreen(
-                navController = mainNavController
+                navController = mainNavController,
+                distance = mainNavController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.get<Int>(ResultConstant.DISTANCE),
+                latitude = mainNavController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.get<Double>(ResultConstant.LATITUDE),
+                longitude = mainNavController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.get<Double>(ResultConstant.LONGITUDE)
             )
         }
         composable<MenuPokemonRoute> { }

@@ -6,4 +6,10 @@ internal sealed interface RatpAction {
 
     data object Filter : RatpAction
 
+    data class FilterChange(
+        val distance: Int,
+        val latitude: Double,
+        val longitude: Double
+    ) : RatpAction
+
 }

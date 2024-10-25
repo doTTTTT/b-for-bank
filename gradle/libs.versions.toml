@@ -23,6 +23,8 @@ other-lottie = "6.5.2"
 
 material3-adaptive = "1.0.0"
 material-icon = "1.7.4"
+material = "1.12.0"
+playServicesLocation = "21.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -85,6 +87,8 @@ ktor-client-content-negotiation-kotlinx = { group = "io.ktor", name = "ktor-seri
 
 # Other
 other-lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "other-lottie" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [bundles]
 

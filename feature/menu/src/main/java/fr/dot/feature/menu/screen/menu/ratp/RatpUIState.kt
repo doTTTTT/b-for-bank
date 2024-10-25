@@ -9,7 +9,10 @@ import kotlinx.datetime.toLocalDateTime
 
 @Immutable
 internal data class RatpUIState(
-    val item: ToiletItem? = null
+    val item: ToiletItem? = null,
+    val distance: Int = 1000,
+    val latitude: Double? = null,
+    val longitude: Double? = null
 ) : ViewModelState
 
 @Immutable

@@ -11,6 +11,7 @@ import fr.dot.library.ui.formatter.DateTimeFormatter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.update
 
@@ -22,14 +23,24 @@ internal class RatpViewModel(
     private val _uiState = MutableStateFlow(RatpUIState())
     override val uiState: StateFlow<RatpUIState> = _uiState.stateIn(_uiState.value)
 
-    val items = flowOfRatpWcsUseCase(FlowOfRatpWcsUseCase.Params)
+    val items = uiState.flatMapLatest { state ->
+        flowOfRatpWcsUseCase(
+            FlowOfRatpWcsUseCase.Params(
+                distance = state.distance,
+                latitude = state.latitude,
+                longitude = state.longitude
+            )
+        )
+    }
         .mapLatest { list -> list.map { it.toItem(formatter) } }
         .cachedIn(viewModelScope)
+
 
     fun onAction(action: RatpAction) {
         when (action) {
             is RatpAction.SelectItem -> onSelectItem(action)
             RatpAction.Filter -> onFilter()
+            is RatpAction.FilterChange -> onFilterChange(action)
         }
     }
 
@@ -39,6 +50,16 @@ internal class RatpViewModel(
 
     private fun onFilter() {
         sendEvents(RatpEvent.NavigateToFilter)
+    }
+
+    private fun onFilterChange(action: RatpAction.FilterChange) {
+        _uiState.update { state ->
+            state.copy(
+                latitude = action.latitude,
+                longitude = action.longitude,
+                distance = action.distance
+            )
+        }
     }
 
 }
