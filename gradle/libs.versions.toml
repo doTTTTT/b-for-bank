@@ -19,6 +19,8 @@ activityCompose = "1.9.3"
 composeBom = "2024.10.00"
 appcompat = "1.7.0"
 
+mockk = "1.13.10"
+
 other-lottie = "6.5.2"
 
 material3-adaptive = "1.0.0"
@@ -62,6 +64,7 @@ androidx-navigation-test = { group = "androidx.navigation", name = "navigation-t
 # AndroidX Paging
 androidx-paging-core = { group = "androidx.paging", name = "paging-runtime", version.ref = "androidx-paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidx-paging" }
+androidx-paging-test = { group = "androidx.paging", name = "paging-common", version.ref = "androidx-paging" }
 
 # Google Maps
 google-maps-compose-core = { group = "com.google.maps.android", name = "maps-compose", version.ref = "google-maps" }
@@ -75,8 +78,10 @@ koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
 
 # Kotlin
 kotlin-coroutine = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutine" }
+kotlin-coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin-coroutine" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlin-datetime" }
+koltin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin-core" }
 
 # Ktor
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
@@ -84,6 +89,12 @@ ktor-client-android = { group = "io.ktor", name = "ktor-client-okhttp", version.
 ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
 ktor-client-content-negotiation-core = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-content-negotiation-kotlinx = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-test = { group = "io.ktor", name = "ktor-client-mock", version.ref = "ktor" }
+
+# Test
+mockk-core = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
+mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockk" }
 
 # Other
 other-lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "other-lottie" }
@@ -115,6 +126,11 @@ koin = [
 ktor = [
     "ktor-client-core", "ktor-client-android", "ktor-client-content-negotiation-core",
     "ktor-client-content-negotiation-kotlinx", "ktor-client-logging"
+]
+
+test-unit = [
+    "ktor-client-test", "koltin-test", "androidx-junit", "junit", "kotlin-coroutine-test",
+    "mockk-core", "mockk-agent", "mockk-android"
 ]
 
 [plugins]

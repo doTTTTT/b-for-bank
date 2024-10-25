@@ -21,22 +21,22 @@ internal data class RatpRecordsEntity(
     data class ParametersEntity(
 
         @SerialName("dataset")
-        val dataset: String,
+        val dataset: String = "",
 
         @SerialName("rows")
-        val rows: Int,
+        val rows: Int = 0,
 
         @SerialName("start")
-        val start: Int,
+        val start: Int = 0,
 
         @SerialName("format")
-        val format: String,
+        val format: String = "",
 
         @SerialName("geofilter.distance")
         val geoFilterDistance: List<String> = emptyList(),
 
         @SerialName("timezone")
-        val timeZone: String
+        val timeZone: String = ""
 
     )
 

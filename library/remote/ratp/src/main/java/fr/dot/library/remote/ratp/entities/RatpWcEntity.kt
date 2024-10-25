@@ -4,6 +4,7 @@ import fr.dot.domain.entities.RatpWC
 import fr.dot.library.remote.ratp.serializer.FrenchBooleanSerializer
 import kotlinx.datetime.Instant
 import kotlinx.datetime.serializers.InstantIso8601Serializer
+import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,13 +12,14 @@ import kotlinx.serialization.Serializable
 internal data class RatpWcEntity(
 
     @SerialName("datasetid")
-    val dataSetId: String,
+    val dataSetId: String = "",
 
     @SerialName("recordid")
-    val recordId: String,
+    @Required
+    val recordId: String = "",
 
     @SerialName("fields")
-    val fields: FieldsEntity,
+    val fields: FieldsEntity = FieldsEntity(),
 
     @SerialName("geometry")
     val geometry: GeometryEntity? = null,
