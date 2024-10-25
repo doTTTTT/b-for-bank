@@ -64,7 +64,9 @@ androidx-navigation-test = { group = "androidx.navigation", name = "navigation-t
 # AndroidX Paging
 androidx-paging-core = { group = "androidx.paging", name = "paging-runtime", version.ref = "androidx-paging" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidx-paging" }
-androidx-paging-test = { group = "androidx.paging", name = "paging-common", version.ref = "androidx-paging" }
+androidx-paging-test-core = { group = "androidx.paging", name = "paging-common", version.ref = "androidx-paging" }
+androidx-paging-test-android = { group = "androidx.paging", name = "paging-testing-android", version.ref = "androidx-paging" }
+
 
 # Google Maps
 google-maps-compose-core = { group = "com.google.maps.android", name = "maps-compose", version.ref = "google-maps" }
@@ -136,7 +138,6 @@ test-unit = [
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-android-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "androidx-navigation" }
 
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-core" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-core" }

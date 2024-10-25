@@ -52,5 +52,5 @@ dependencies {
     implementation(projects.library.data)
 
     testImplementation(libs.bundles.test.unit)
-    testImplementation(libs.androidx.paging.test)
+    testImplementation(libs.androidx.paging.test.android)
 }
