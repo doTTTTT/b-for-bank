@@ -8,6 +8,8 @@ import fr.dot.library.navigation.route.MenuRoute
 
 fun NavGraphBuilder.menuGraph(navController: NavHostController) {
     composable<MenuRoute> {
-        MenuScreen()
+        MenuScreen(
+            navController = navController
+        )
     }
 }

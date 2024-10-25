@@ -98,6 +98,12 @@ internal data class RatpWcEntity(
         @SerialName("SANISETTE")
         SANISETTE,
 
+        @SerialName("LAVATORY")
+        LAVATORY,
+
+        @SerialName("URINOIR")
+        URINOIR,
+
         UNKNOWN
     }
 
@@ -115,6 +121,9 @@ internal fun RatpWcEntity.toDomain() = RatpWC(
     type = when (fields.type) {
         RatpWcEntity.Type.WC -> RatpWC.Type.WC
         RatpWcEntity.Type.SANISETTE -> RatpWC.Type.SANISETTE
+        RatpWcEntity.Type.LAVATORY -> RatpWC.Type.LAVOTORY
+        RatpWcEntity.Type.URINOIR -> RatpWC.Type.URINOIR
+
         RatpWcEntity.Type.UNKNOWN -> RatpWC.Type.UNKNOWN
     }
 )

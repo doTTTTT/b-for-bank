@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -21,12 +22,14 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun MenuScreen(
+    navController: NavController,
     viewModel: MenuViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Content(
         uiState = uiState,
+        mainNavController = navController,
         onAction = viewModel::onAction
     )
 }
@@ -34,6 +37,7 @@ internal fun MenuScreen(
 @Composable
 private fun Content(
     uiState: MenuUIState,
+    mainNavController: NavController,
     onAction: (MenuAction) -> Unit
 ) {
     NavigationSuiteScaffold(
@@ -46,7 +50,8 @@ private fun Content(
         modifier = Modifier.fillMaxSize()
     ) {
         MainContent(
-            uiState = uiState
+            uiState = uiState,
+            mainNavController = mainNavController
         )
     }
 }
@@ -77,7 +82,8 @@ private fun NavigationSuiteScope.menuContent(
 
 @Composable
 private fun MainContent(
-    uiState: MenuUIState
+    uiState: MenuUIState,
+    mainNavController: NavController
 ) {
     val navController = rememberNavController()
 
@@ -97,7 +103,9 @@ private fun MainContent(
         modifier = Modifier.fillMaxSize()
     ) {
         composable<MenuRatpRoute> {
-            RatpScreen()
+            RatpScreen(
+                navController = mainNavController
+            )
         }
         composable<MenuPokemonRoute> { }
         composable<MenuProfileRoute> { }
@@ -110,6 +118,7 @@ private fun Preview() {
     BforBankTheme {
         Content(
             uiState = MenuUIState(),
+            mainNavController = rememberNavController(),
             onAction = {}
         )
     }

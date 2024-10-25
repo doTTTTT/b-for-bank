@@ -4,4 +4,6 @@ internal sealed interface RatpAction {
 
     data class SelectItem(val item: ToiletItem) : RatpAction
 
+    data object Filter : RatpAction
+
 }

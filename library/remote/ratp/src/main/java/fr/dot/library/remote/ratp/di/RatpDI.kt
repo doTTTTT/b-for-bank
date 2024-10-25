@@ -29,6 +29,7 @@ val ratpModule = module {
 
 private fun provideJson() = Json {
     ignoreUnknownKeys = true
+    coerceInputValues = true
 }
 
 private fun provideClient(json: Json): HttpClient = HttpClient(OkHttp) {

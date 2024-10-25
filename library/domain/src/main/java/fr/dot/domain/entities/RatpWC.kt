@@ -17,6 +17,9 @@ data class RatpWC(
     enum class Type {
         WC,
         SANISETTE,
+        LAVOTORY,
+        URINOIR,
+
         UNKNOWN
     }
 
