@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RatpRepository {
 
-    suspend fun getWC(): List<RatpWC>
-
     fun pagingWc(
         distance: Int,
         latitudeLongitude: LatitudeLongitude?

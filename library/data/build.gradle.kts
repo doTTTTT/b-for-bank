@@ -38,10 +38,12 @@ dependencies {
 
     api(projects.library.domain)
 
+    api(libs.kotlin.datetime)
+
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
 
     implementation(libs.androidx.paging.core)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.bundles.test.unit)
 }

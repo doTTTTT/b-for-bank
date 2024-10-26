@@ -10,10 +10,6 @@ internal class RatpRepositoryImpl(
     private val remote: RatpRemoteDataSource
 ) : RatpRepository {
 
-    override suspend fun getWC(): List<RatpWC> {
-        return remote.getWc()
-    }
-
     override fun pagingWc(
         distance: Int,
         latitudeLongitude: LatitudeLongitude?

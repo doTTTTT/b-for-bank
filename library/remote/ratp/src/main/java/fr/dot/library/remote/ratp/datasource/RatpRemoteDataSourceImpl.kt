@@ -17,12 +17,6 @@ internal class RatpRemoteDataSourceImpl(
     private val api: RatpApi
 ) : RatpRemoteDataSource {
 
-    override suspend fun getWc(): List<RatpWC> {
-        return api.getWcs(0, 0, null)
-            .records
-            .map(RatpWcEntity::toDomain)
-    }
-
     override fun paging(
         distance: Int,
         latitudeLongitude: LatitudeLongitude?
