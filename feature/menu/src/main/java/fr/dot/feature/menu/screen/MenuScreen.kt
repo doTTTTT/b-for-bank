@@ -3,8 +3,11 @@ package fr.dot.feature.menu.screen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.window.core.layout.WindowWidthSizeClass
 import fr.dot.feature.menu.screen.menu.ratp.RatpScreen
 import fr.dot.library.navigation.ResultConstant
 import fr.dot.library.ui.theme.BforBankTheme
@@ -41,7 +45,15 @@ private fun Content(
     mainNavController: NavController,
     onAction: (MenuAction) -> Unit
 ) {
+    val windowInfo = currentWindowAdaptiveInfo()
+    val layoutType = if (windowInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED) {
+        NavigationSuiteType.NavigationDrawer
+    } else {
+        NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(windowInfo)
+    }
+
     NavigationSuiteScaffold(
+//        layoutType = layoutType,
         navigationSuiteItems = {
             menuContent(
                 uiState = uiState,
@@ -65,6 +77,7 @@ private fun NavigationSuiteScope.menuContent(
         .forEach {
             item(
                 selected = uiState.menu == it,
+                alwaysShowLabel = false,
                 icon = {
                     Icon(
                         imageVector = it.icon,
@@ -92,7 +105,6 @@ private fun MainContent(
         navController.navigate(
             when (uiState.menu) {
                 MenuItem.RATP -> MenuRatpRoute
-                MenuItem.POKEMON -> MenuPokemonRoute
                 MenuItem.PROFILE -> MenuProfileRoute
             }
         )
@@ -117,8 +129,9 @@ private fun MainContent(
                     ?.get<Double>(ResultConstant.LONGITUDE)
             )
         }
-        composable<MenuPokemonRoute> { }
-        composable<MenuProfileRoute> { }
+        composable<MenuProfileRoute> {
+
+        }
     }
 }
 

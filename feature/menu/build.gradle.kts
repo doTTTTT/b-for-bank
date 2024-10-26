@@ -57,6 +57,8 @@ dependencies {
     implementation(projects.library.ui)
     implementation(projects.library.domain)
 
+    implementation(libs.play.services.location)
+
     testImplementation(libs.bundles.test.unit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

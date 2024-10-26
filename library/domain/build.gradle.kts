@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.kotlin.datetime)
 
     implementation(libs.androidx.paging.core)
+    implementation(libs.play.services.maps)
 
     testImplementation(libs.bundles.test.unit)
 

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -22,11 +23,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.Bathroom
-import androidx.compose.material.icons.sharp.CleanHands
-import androidx.compose.material.icons.sharp.CurrencyBitcoin
+import androidx.compose.material.icons.automirrored.rounded.Accessible
+import androidx.compose.material.icons.rounded.AdminPanelSettings
+import androidx.compose.material.icons.rounded.NotAccessible
+import androidx.compose.material.icons.rounded.SocialDistance
 import androidx.compose.material.icons.sharp.FilterList
-import androidx.compose.material.icons.sharp.QuestionMark
 import androidx.compose.material.icons.sharp.Wc
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
@@ -67,6 +68,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.paging.LoadState
@@ -78,7 +80,13 @@ import androidx.window.core.layout.WindowWidthSizeClass
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
-import fr.dot.domain.entities.RatpWC
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberMarkerState
+import fr.dot.domain.entities.asLatLng
 import fr.dot.library.navigation.route.RatpFilterRoute
 import fr.dot.library.ui.R
 import fr.dot.library.ui.common.LaunchedEffectFlowWithLifecycle
@@ -269,13 +277,7 @@ private fun ListContent(
             .semantics { isTraversalGroup = true }
     ) {
         LazyVerticalGrid(
-            columns = when (currentWindow.windowSizeClass.windowWidthSizeClass) {
-                WindowWidthSizeClass.COMPACT -> GridCells.Fixed(1)
-                WindowWidthSizeClass.MEDIUM -> GridCells.Fixed(2)
-                WindowWidthSizeClass.EXPANDED -> GridCells.Fixed(3)
-
-                else -> GridCells.Fixed(1)
-            },
+            columns = GridCells.Fixed(1),
             modifier = Modifier
                 .fillMaxSize()
                 .testTag(RatpTestTag.LIST)
@@ -334,16 +336,192 @@ private fun ListContent(
 private fun DetailContent(
     item: ToiletItem
 ) {
+    val windowInfo = currentWindowAdaptiveInfo()
+
     Column(
+        verticalArrangement = Arrangement.spacedBy(BForBankTheme.padding.medium),
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .padding(BForBankTheme.padding.medium)
     ) {
         Text(
-            text = item.recordId,
+            text = item.address,
             style = BForBankTheme.typography.titleLarge
         )
+        if (windowInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(BForBankTheme.padding.medium),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                DetailDescriptionItem(
+                    item = item,
+                    modifier = Modifier.weight(1f)
+                )
+                DetailItem(
+                    item = item,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        } else {
+            DetailDescriptionItem(
+                item = item,
+                modifier = Modifier.fillMaxWidth()
+            )
+            DetailItem(
+                item = item,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        DetailMap(item)
     }
+}
+
+@Composable
+private fun DetailDescriptionItem(
+    item: ToiletItem,
+    modifier: Modifier = Modifier
+) {
+    ElevatedCard(
+        modifier = modifier
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(BForBankTheme.padding.small),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(BForBankTheme.padding.medium)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(BForBankTheme.padding.small)
+            ) {
+                Icon(
+                    imageVector = if (item.accessPmr) {
+                        Icons.AutoMirrored.Rounded.Accessible
+                    } else {
+                        Icons.Rounded.NotAccessible
+                    },
+                    contentDescription = null
+                )
+                Text(
+                    text = stringResource(R.string.screen_menu_ratp_access_pmr),
+                    style = BForBankTheme.typography.labelMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(BForBankTheme.padding.small)
+            ) {
+                Icon(
+                    imageVector = item.icon,
+                    contentDescription = null
+                )
+                Text(
+                    text = item.type.toString(),
+                    style = BForBankTheme.typography.labelMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun DetailItem(
+    item: ToiletItem,
+    modifier: Modifier = Modifier
+) {
+    ElevatedCard(
+        modifier = modifier
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(BForBankTheme.padding.small),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(BForBankTheme.padding.medium)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(BForBankTheme.padding.small)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.AdminPanelSettings,
+                    contentDescription = null
+                )
+                Text(
+                    text = item.administrator ?: stringResource(R.string.screen_menu_ratp_no_admin),
+                    style = BForBankTheme.typography.labelMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(BForBankTheme.padding.small)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.SocialDistance,
+                    contentDescription = null
+                )
+                Text(
+                    text = item.distance?.let { "${it}m" }
+                        ?: stringResource(R.string.common_unknown),
+                    style = BForBankTheme.typography.labelMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun DetailMap(
+    item: ToiletItem
+) {
+    val camera = rememberCameraPositionState()
+
+    if (item.geoPoint != null) {
+        val state = rememberMarkerState(position = item.geoPoint.asLatLng())
+
+        LaunchedEffect(item) {
+            val latLng = item.geoPoint.asLatLng()
+
+            state.position = latLng
+            camera.animate(CameraUpdateFactory.newLatLngZoom(latLng, 16f))
+        }
+
+        ElevatedCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp)
+        ) {
+            GoogleMap(
+                uiSettings = MapUiSettings(
+                    compassEnabled = true,
+                    zoomControlsEnabled = false,
+                    zoomGesturesEnabled = false,
+                    myLocationButtonEnabled = false,
+                    scrollGesturesEnabled = false,
+                    tiltGesturesEnabled = false,
+                    indoorLevelPickerEnabled = false,
+                    mapToolbarEnabled = false,
+                    rotationGesturesEnabled = false,
+                    scrollGesturesEnabledDuringRotateOrZoom = false
+                ),
+                cameraPositionState = camera,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Marker(
+                    state = state
+                )
+            }
+        }
+    }
+
 }
 
 @Composable
@@ -398,14 +576,7 @@ private fun LazyGridItemScope.ItemUI(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(
-                    imageVector = when (item.type) {
-                        RatpWC.Type.WC -> Icons.Sharp.Wc
-                        RatpWC.Type.SANISETTE -> Icons.Sharp.Bathroom
-                        RatpWC.Type.LAVOTORY -> Icons.Sharp.CleanHands
-                        RatpWC.Type.URINOIR -> Icons.Sharp.CurrencyBitcoin
-
-                        RatpWC.Type.UNKNOWN -> Icons.Sharp.QuestionMark
-                    },
+                    imageVector = item.icon,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp)
                 )
