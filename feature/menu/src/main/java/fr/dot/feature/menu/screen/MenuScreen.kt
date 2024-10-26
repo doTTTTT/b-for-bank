@@ -20,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.window.core.layout.WindowWidthSizeClass
+import fr.dot.feature.menu.screen.menu.profile.ProfileScreen
 import fr.dot.feature.menu.screen.menu.ratp.RatpScreen
 import fr.dot.library.navigation.ResultConstant
 import fr.dot.library.ui.theme.BforBankTheme
@@ -45,15 +46,7 @@ private fun Content(
     mainNavController: NavController,
     onAction: (MenuAction) -> Unit
 ) {
-    val windowInfo = currentWindowAdaptiveInfo()
-    val layoutType = if (windowInfo.windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED) {
-        NavigationSuiteType.NavigationDrawer
-    } else {
-        NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(windowInfo)
-    }
-
     NavigationSuiteScaffold(
-//        layoutType = layoutType,
         navigationSuiteItems = {
             menuContent(
                 uiState = uiState,
@@ -130,7 +123,7 @@ private fun MainContent(
             )
         }
         composable<MenuProfileRoute> {
-
+            ProfileScreen()
         }
     }
 }
