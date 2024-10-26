@@ -6,6 +6,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -260,6 +261,11 @@ private fun ListContent(
         contentAlignment = Alignment.TopCenter,
         modifier = Modifier
             .fillMaxSize()
+            .pullToRefresh(
+                isRefreshing = isRefreshing,
+                state = pullToRefreshState,
+                onRefresh = { isRefreshing = true }
+            )
             .semantics { isTraversalGroup = true }
     ) {
         LazyVerticalGrid(
@@ -272,11 +278,6 @@ private fun ListContent(
             },
             modifier = Modifier
                 .fillMaxSize()
-                .pullToRefresh(
-                    isRefreshing = isRefreshing,
-                    state = pullToRefreshState,
-                    onRefresh = { isRefreshing = true }
-                )
                 .testTag(RatpTestTag.LIST)
         ) {
             items(
@@ -303,6 +304,18 @@ private fun ListContent(
                     )
                 }
             }
+        }
+        AnimatedVisibility(
+            visible = items.itemCount == 0,
+            modifier = Modifier.align(Alignment.Center)
+        ) {
+            Text(
+                text = stringResource(R.string.screen_menu_ratp_empty),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = BForBankTheme.padding.large)
+            )
         }
         LottieAnimation(
             composition = composition,
