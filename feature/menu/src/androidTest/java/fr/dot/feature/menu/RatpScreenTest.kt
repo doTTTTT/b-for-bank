@@ -101,4 +101,5 @@ class RatpScreenTest {
         node.assertIsDisplayed()
         node.performClick()
     }
+
 }
