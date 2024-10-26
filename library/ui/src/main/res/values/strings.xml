@@ -9,6 +9,7 @@
 
     <string name="screen_menu_ratp_permission">You must accept at least one permission</string>
     <string name="screen_menu_ratp_empty">No WC found</string>
+    <string name="screen_menu_ratp_cant_navigate">No application found for navigation</string>
 
     <string name="screen_menu_ratp_access_pmr">Access handicap</string>
     <string name="screen_menu_ratp_no_admin">No administrator</string>
@@ -19,9 +20,10 @@
     <string name="error_common">An error occurred</string>
 
     <string name="common_accept">Accept</string>
-    <string name="common_retry">Réessayer</string>
+    <string name="common_retry">Retry</string>
     <string name="common_validate">Validate</string>
     <string name="common_unknown">Unknown</string>
+    <string name="common_navigate">Navigate</string>
 
     <string name="month_january">January</string>
     <string name="month_february">February</string>

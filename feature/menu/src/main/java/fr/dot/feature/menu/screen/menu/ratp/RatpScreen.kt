@@ -3,7 +3,10 @@
 package fr.dot.feature.menu.screen.menu.ratp
 
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
 import androidx.compose.animation.AnimatedVisibility
@@ -12,11 +15,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -25,10 +30,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Accessible
 import androidx.compose.material.icons.rounded.AdminPanelSettings
+import androidx.compose.material.icons.rounded.Navigation
 import androidx.compose.material.icons.rounded.NotAccessible
 import androidx.compose.material.icons.rounded.SocialDistance
 import androidx.compose.material.icons.sharp.FilterList
 import androidx.compose.material.icons.sharp.Wc
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -68,7 +75,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.paging.LoadState
@@ -87,6 +93,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import fr.dot.domain.entities.asLatLng
+import fr.dot.domain.entities.stringify
 import fr.dot.library.navigation.route.RatpFilterRoute
 import fr.dot.library.ui.R
 import fr.dot.library.ui.common.LaunchedEffectFlowWithLifecycle
@@ -145,6 +152,21 @@ internal fun RatpScreen(
                             longitude = uiState.longitude
                         )
                     )
+                }
+            }
+
+            is RatpEvent.NavigateTo -> {
+                try {
+                    val uri = Uri.parse(
+                        "google.navigation:q=${event.latitudeLongitude.stringify()}"
+                    )
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+
+                    intent.setPackage("com.google.android.apps.maps")
+
+                    context.startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    snackbarHostState.showSnackbar(context.getString(R.string.screen_menu_ratp_cant_navigate))
                 }
             }
         }
@@ -231,7 +253,10 @@ internal fun Content(
             detailPane = {
                 AnimatedPane {
                     if (uiState.item != null) {
-                        DetailContent(uiState.item)
+                        DetailContent(
+                            item = uiState.item,
+                            onAction = onAction
+                        )
                     } else {
                         DetailEmptyContent()
                     }
@@ -334,7 +359,8 @@ private fun ListContent(
 
 @Composable
 private fun DetailContent(
-    item: ToiletItem
+    item: ToiletItem,
+    onAction: (RatpAction) -> Unit
 ) {
     val windowInfo = currentWindowAdaptiveInfo()
 
@@ -374,6 +400,19 @@ private fun DetailContent(
             )
         }
         DetailMap(item)
+        Button(
+            onClick = { onAction(RatpAction.NavigateTo(item.geoPoint)) }
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.Navigation,
+                contentDescription = null,
+                modifier = Modifier.size(16.dp)
+            )
+            Spacer(Modifier.width(BForBankTheme.padding.small))
+            Text(
+                stringResource(R.string.common_navigate)
+            )
+        }
     }
 }
 

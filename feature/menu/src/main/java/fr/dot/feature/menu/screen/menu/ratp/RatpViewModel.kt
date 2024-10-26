@@ -41,6 +41,7 @@ internal class RatpViewModel(
             is RatpAction.SelectItem -> onSelectItem(action)
             RatpAction.Filter -> onFilter()
             is RatpAction.FilterChange -> onFilterChange(action)
+            is RatpAction.NavigateTo -> onNavigateTo(action)
         }
     }
 
@@ -60,6 +61,10 @@ internal class RatpViewModel(
                 distance = action.distance
             )
         }
+    }
+
+    private fun onNavigateTo(action: RatpAction.NavigateTo) {
+        sendEvents(RatpEvent.NavigateTo(action.latitudeLongitude ?: return))
     }
 
 }
