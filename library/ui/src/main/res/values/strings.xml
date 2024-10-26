@@ -10,7 +10,7 @@
     <string name="screen_menu_ratp_empty">No WC found</string>
     <string name="screen_menu_ratp_cant_navigate">No application found for navigation</string>
 
-    <string name="screen_menu_ratp_access_pmr">Access handicap</string>
+    <string name="screen_menu_ratp_access_pmr">Disabled access</string>
     <string name="screen_menu_ratp_no_admin">No administrator</string>
 
     <string name="screen_ratp_filter_maps_description">Select a point on the map</string>

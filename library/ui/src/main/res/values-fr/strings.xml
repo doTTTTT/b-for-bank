@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BforBank</string>
+    <string name="app_name">BorBank</string>
 
     <string name="screen_menu_item_ratp">WC</string>
     <string name="screen_menu_item_profile">Profil</string>
     <string name="screen_menu_item_detail_empty">Selectioner un WC</string>
 
     <string name="screen_menu_ratp_permission">Vous devez accepter au moins une permission</string>
-    <string name="screen_menu_ratp_empty">Aucun WC trouver</string>
-    <string name="screen_menu_ratp_cant_navigate">Aucune application trouver pour naviguer</string>
+    <string name="screen_menu_ratp_empty">Aucun WC à proximité</string>
+    <string name="screen_menu_ratp_cant_navigate">Aucune application trouvée pour naviguer</string>
 
-    <string name="screen_menu_ratp_access_pmr">Accès handicaper</string>
+    <string name="screen_menu_ratp_access_pmr">Accès handicapé</string>
     <string name="screen_menu_ratp_no_admin">Aucun administrateur</string>
 
-    <string name="screen_ratp_filter_maps_description">Selectionner un point sur la map</string>
+    <string name="screen_ratp_filter_maps_description">Selectionner un endroit sur la map</string>
     <string name="screen_ratp_filter_distance">Distance</string>
 
-    <string name="error_common">Une erreur est arriver</string>
+    <string name="error_common">Une erreur est survenue</string>
 
     <string name="common_accept">Accepter</string>
     <string name="common_retry">Réessayer</string>
     <string name="common_validate">Valider</string>
-    <string name="common_unknown">Inconnue</string>
+    <string name="common_unknown">Inconnu</string>
     <string name="common_navigate">Naviguer</string>
 
     <string name="month_january">Janvier</string>
@@ -31,7 +31,7 @@
     <string name="month_may">Mai</string>
     <string name="month_june">Juin</string>
     <string name="month_july">Juillet</string>
-    <string name="month_august">Aout</string>
+    <string name="month_august">Août</string>
     <string name="month_september">Septembre</string>
     <string name="month_october">Octobre</string>
     <string name="month_november">Novembre</string>

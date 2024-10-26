@@ -95,13 +95,15 @@ private fun Content(
     }
 
     LaunchedEffect(Unit) {
-        LocationServices.getFusedLocationProviderClient(context)
-            .lastLocation
-            .addOnSuccessListener {
-                onAction(
-                    RatpFilterAction.LatLngChanged(LatLng(it.latitude, it.longitude))
-                )
-            }
+        if (uiState.latLng == null) {
+            LocationServices.getFusedLocationProviderClient(context)
+                .lastLocation
+                .addOnSuccessListener {
+                    onAction(
+                        RatpFilterAction.LatLngChanged(LatLng(it.latitude, it.longitude))
+                    )
+                }
+        }
     }
 
     Column(
