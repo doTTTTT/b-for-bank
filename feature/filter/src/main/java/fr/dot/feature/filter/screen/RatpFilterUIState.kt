@@ -6,6 +6,6 @@ import fr.dot.library.ui.common.ViewModelState
 
 @Immutable
 internal data class RatpFilterUIState(
-    val distance: Int = 100,
+    val distance: Int = 500,
     val latLng: LatLng? = null
 ) : ViewModelState
