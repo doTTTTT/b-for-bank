@@ -13,6 +13,8 @@ API chosen: https://data.ratp.fr/api/records/1.0/search/?dataset=sanisettesparis
 - https://github.com/Kotlin/kotlinx.coroutines
 - https://github.com/cashapp/turbine
 - https://github.com/airbnb/lottie-android
+- https://github.com/InsertKoinIO/koin
+- https://github.com/googlemaps/android-maps-compose
 - https://ktor.io/docs/client-create-new-application.html
 - https://mockk.io/
 
