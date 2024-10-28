@@ -16,6 +16,10 @@
     <string name="screen_ratp_filter_maps_description">Select a point on the map</string>
     <string name="screen_ratp_filter_distance">Distance</string>
 
+    <string name="screen_description_title">Where\'s the W.C.?</string>
+    <string name="screen_description_description">An application to help you found W.C from a geo-point.</string>
+    <string name="screen_description_list_of_types">List of W.C types</string>
+
     <string name="error_common">An error occurred</string>
 
     <string name="common_accept">Accept</string>

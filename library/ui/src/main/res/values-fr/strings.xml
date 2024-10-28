@@ -16,6 +16,10 @@
     <string name="screen_ratp_filter_maps_description">Selectionner un endroit sur la map</string>
     <string name="screen_ratp_filter_distance">Distance</string>
 
+    <string name="screen_description_title">Où sont les W.C.?</string>
+    <string name="screen_description_description">Une application pour voius aidez a trouver des toilettes à partir d\'un point géographique.</string>
+    <string name="screen_description_list_of_types">Liste des types de toilettes</string>
+
     <string name="error_common">Une erreur est survenue</string>
 
     <string name="common_accept">Accepter</string>

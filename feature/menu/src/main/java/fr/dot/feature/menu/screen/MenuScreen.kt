@@ -3,11 +3,8 @@ package fr.dot.feature.menu.screen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,8 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.window.core.layout.WindowWidthSizeClass
-import fr.dot.feature.menu.screen.menu.profile.ProfileScreen
+import fr.dot.feature.menu.screen.menu.description.DescriptionScreen
 import fr.dot.feature.menu.screen.menu.ratp.RatpScreen
 import fr.dot.library.navigation.ResultConstant
 import fr.dot.library.ui.theme.BforBankTheme
@@ -123,7 +119,7 @@ private fun MainContent(
             )
         }
         composable<MenuProfileRoute> {
-            ProfileScreen()
+            DescriptionScreen()
         }
     }
 }
