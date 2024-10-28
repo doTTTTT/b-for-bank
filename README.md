@@ -4,7 +4,7 @@ Technical test for BforBank.
 
 API chosen: https://data.ratp.fr/api/records/1.0/search/?dataset=sanisettesparis2011
 
-## Lib used
+## Libs used
 - https://developer.android.com/topic/libraries/architecture/paging/v3-overview
 - https://developer.android.com/jetpack/androidx/releases/compose-material3-adaptive
 - https://developer.android.com/develop/ui/compose/layouts/adaptive/build-adaptive-navigation?hl=fr
