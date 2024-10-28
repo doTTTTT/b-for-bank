@@ -45,6 +45,9 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.splash)
+
     implementation(libs.bundles.koin)
 
     implementation(projects.feature.menu)

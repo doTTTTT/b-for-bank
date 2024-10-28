@@ -4,6 +4,7 @@ package fr.dot.feature.menu.screen.menu.ratp
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import androidx.paging.map
 import fr.dot.domain.usecase.ratp.FlowOfRatpWcsUseCase
 import fr.dot.library.ui.common.BaseViewModel
@@ -42,6 +43,7 @@ internal class RatpViewModel(
             RatpAction.Filter -> onFilter()
             is RatpAction.FilterChange -> onFilterChange(action)
             is RatpAction.NavigateTo -> onNavigateTo(action)
+            is RatpAction.SelectFilter -> onSelectFilter(action)
         }
     }
 
@@ -65,6 +67,10 @@ internal class RatpViewModel(
 
     private fun onNavigateTo(action: RatpAction.NavigateTo) {
         sendEvents(RatpEvent.NavigateTo(action.latitudeLongitude ?: return))
+    }
+
+    private fun onSelectFilter(action: RatpAction.SelectFilter) {
+
     }
 
 }
