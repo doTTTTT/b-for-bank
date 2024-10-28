@@ -7,6 +7,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
 import androidx.compose.foundation.layout.fillMaxSize
@@ -76,9 +77,21 @@ internal fun RatpScreen(
             )
         } else {
             scope.launch {
-                snackbarHostState.showSnackbar(
-                    message = context.getString(R.string.screen_menu_ratp_permission)
+                snackbarHostState.currentSnackbarData?.dismiss()
+                val result = snackbarHostState.showSnackbar(
+                    message = context.getString(R.string.screen_menu_ratp_permission),
+                    actionLabel = context.getString(R.string.common_accept)
                 )
+
+                when (result) {
+                    SnackbarResult.Dismissed -> Unit
+                    SnackbarResult.ActionPerformed -> {
+                        context.startActivity(
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                .setData(Uri.fromParts("package", context.packageName, null))
+                        )
+                    }
+                }
             }
         }
     }
