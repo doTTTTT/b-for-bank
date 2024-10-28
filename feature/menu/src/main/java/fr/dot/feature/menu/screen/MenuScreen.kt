@@ -8,6 +8,9 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,6 +45,7 @@ private fun Content(
     mainNavController: NavController,
     onAction: (MenuAction) -> Unit
 ) {
+
     NavigationSuiteScaffold(
         navigationSuiteItems = {
             menuContent(
@@ -89,19 +93,21 @@ private fun MainContent(
     mainNavController: NavController
 ) {
     val navController = rememberNavController()
+    // To avoid double composition, from startDestination & LaunchEffect
+    var isTriggered by remember { mutableStateOf(false) }
+
 
     LaunchedEffect(uiState.menu) {
-        navController.navigate(
-            when (uiState.menu) {
-                MenuItem.RATP -> MenuRatpRoute
-                MenuItem.PROFILE -> MenuProfileRoute
-            }
-        )
+        if (!isTriggered) {
+            isTriggered = true
+        } else {
+            navController.navigate(uiState.menu.route)
+        }
     }
 
     NavHost(
         navController = navController,
-        startDestination = MenuRatpRoute,
+        startDestination = uiState.menu.route,
         modifier = Modifier.fillMaxSize()
     ) {
         composable<MenuRatpRoute> {
@@ -118,7 +124,7 @@ private fun MainContent(
                     ?.get<Double>(ResultConstant.LONGITUDE)
             )
         }
-        composable<MenuProfileRoute> {
+        composable<MenuDescriptionRoute> {
             DescriptionScreen()
         }
     }

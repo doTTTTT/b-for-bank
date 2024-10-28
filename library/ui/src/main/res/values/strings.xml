@@ -3,7 +3,7 @@
     <string name="app_name">BforBank</string>
 
     <string name="screen_menu_item_ratp">WC</string>
-    <string name="screen_menu_item_profile">Profile</string>
+    <string name="screen_menu_item_description">Profile</string>
     <string name="screen_menu_item_detail_empty">Select a WC</string>
 
     <string name="screen_menu_ratp_permission">You must accept at least one permission</string>

@@ -2,7 +2,7 @@ package fr.dot.feature.menu.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.AccountCircle
+import androidx.compose.material.icons.sharp.Description
 import androidx.compose.material.icons.sharp.Wc
 import androidx.compose.ui.graphics.vector.ImageVector
 import fr.dot.library.ui.R
@@ -16,9 +16,9 @@ internal enum class MenuItem(
         R.string.screen_menu_item_ratp,
         Icons.Sharp.Wc
     ),
-    PROFILE(
-        R.string.screen_menu_item_profile,
-        Icons.Sharp.AccountCircle
+    DESCRIPTION(
+        R.string.screen_menu_item_description,
+        Icons.Sharp.Description
     )
 }
 
@@ -26,4 +26,10 @@ internal enum class MenuItem(
 internal data object MenuRatpRoute
 
 @Serializable
-internal data object MenuProfileRoute
+internal data object MenuDescriptionRoute
+
+internal val MenuItem.route: Any
+    get() = when (this) {
+        MenuItem.RATP -> MenuRatpRoute
+        MenuItem.DESCRIPTION -> MenuDescriptionRoute
+    }
