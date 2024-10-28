@@ -1,7 +1,6 @@
 package fr.dot.feature.menu.screen.menu.ratp
 
 import fr.dot.domain.entities.LatitudeLongitude
-import fr.dot.domain.entities.RatpWC
 
 internal sealed interface RatpAction {
 
@@ -16,9 +15,5 @@ internal sealed interface RatpAction {
     ) : RatpAction
 
     data class NavigateTo(val latitudeLongitude: LatitudeLongitude?) : RatpAction
-
-    data class SelectFilter(
-        val type: RatpWC.Type
-    ) : RatpAction
 
 }
